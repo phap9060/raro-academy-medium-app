@@ -7,13 +7,13 @@ import { ArtigosPage } from './pages/ArtigosPage';
 import { ArtigoPage } from './pages/ ArtigoPage';
 import { MeusArtigosPage } from './pages/MeusArtigos';
 import { EditarArquivoPage } from './pages/EditarArquivo';
-const auth = true
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/login' element={<LoginPage/>} />
-        <Route path="/" element={ auth ?  <Layout /> : <LoginPage/> } >
+        <Route path="/" element={  <Layout /> } >
           <Route index element={<ArtigosPage />} />
           <Route path="/artigo/:id" element={<ArtigoPage />} />
           <Route path="/artigos" element={<MeusArtigosPage />} />
