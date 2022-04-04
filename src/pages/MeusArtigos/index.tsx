@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import { ArticleList } from "../../components/ArticleList";
 import { ArticleThumbnailProps } from "../../components/ArticleThumbnail/ArticleThumbnail.types";
-import axios from "axios";
 import { NoArticle } from "../../components/NoArticles";
+import apiClient from "../../service/api-client";
+import { useNavigate,useParams } from "react-router-dom";
 export const MeusArtigosPage = () => {
   const [articles, setArticles] = useState<ArticleThumbnailProps[]>([]);
-  const [render, setRender] = useState(false)
+  const [deletado,setDeletado]= useState(false)
+  const navigate = useNavigate();
   async function buscaMeusArtigos() {
-    const token = localStorage.getItem("access_token");
-    const response = await axios.get<ArticleThumbnailProps[]>(
-      'http://3.221.159.196:3307/artigos/meus-artigos',
-      {
-        headers: {
-          'Authorization': `bearer ${token}`
-        }
-      }
-    );
-    setArticles(response.data);
+    const response = await apiClient.get<ArticleThumbnailProps[]>(
+      '/artigos/meus-artigos')
+      setArticles(response.data);
   }
   useEffect(() => {
     buscaMeusArtigos();
-  }, []);
+  }, [deletado]);
+  const remove = async (id:number) => {
+    console.log('alemao')
+    await apiClient.delete<ArticleThumbnailProps>(`/artigos/${id}`);
+    setDeletado(()=>!deletado)
+    navigate('/artigos');
+  }
+  
 
 
   if (articles.length === 0) {
@@ -28,7 +30,7 @@ export const MeusArtigosPage = () => {
   }
   return (
     <div className="my-30">
-      <ArticleList articles={articles} />
+      <ArticleList articles={articles} remove={remove}  />
     </div>
   );
 };

@@ -3,7 +3,8 @@ import { ArticleThumbnail } from "../ArticleThumbnail";
 import { ArticleListProps } from "./ArticleList.types";
 
 export const ArticleList: React.FC<ArticleListProps> = ({
-  articles
+  articles,
+  remove
 }) => {
   
   return (
@@ -13,6 +14,7 @@ export const ArticleList: React.FC<ArticleListProps> = ({
           <ArticleThumbnail
             key={ article.titulo }
             {...article}
+            remove={remove}
           />
         ))
       }

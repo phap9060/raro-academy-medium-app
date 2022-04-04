@@ -21,6 +21,7 @@ export const ArtigosPage = () => {
         <div className="my-30">
             <ArticleList
                 articles={articles}
+                
             />
         </div>
     )

@@ -36,7 +36,7 @@ export const EditarArquivoPage = () => {
 
   const remove = async () => {
     await apiClient.delete(`/artigos/${id}`);
-    navigate('/artigos');
+    navigate('/artigos/');
     }
 
 

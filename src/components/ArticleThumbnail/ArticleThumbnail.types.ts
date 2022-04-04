@@ -13,5 +13,5 @@ export type ArticleThumbnailProps = {
   editavel?: boolean;
   id:number;
   conteudo: string;
-  canEdit:any;
+  remove?:(id:number) => Promise<void>
 }
