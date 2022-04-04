@@ -7,6 +7,7 @@ import apiClient from '../../service/api-client'
 
 export const EditarArquivoPage = () => {
   const [ artigo, setArtigo ] = useState<ArticleThumbnailProps>();
+  const [canEdit,setCanEdit]=useState(false)
   const { id } = useParams();
 
   const navigate = useNavigate()
@@ -18,23 +19,31 @@ export const EditarArquivoPage = () => {
   useEffect(() => {
     if (id) {
       buscarArtigo();
+      
     }
+   
   }, [id]);
   async function handleSubmit(artigo: ArticleThumbnailProps) {
     if (artigo.id) {
         const editArtigo = await apiClient.patch(`/artigos/${artigo.id}`, { ...artigo });
         navigate(`/artigo/${editArtigo.data.id}`);
+        
     } else {
         const salvarArtigo = await apiClient.post(`/artigos/`, { ...artigo });
         navigate(`/artigo/${salvarArtigo.data.id}`);
     }
   }
 
+  const remove = async () => {
+    await apiClient.delete(`/artigos/${id}`);
+    navigate('/artigos');
+    }
+
 
   return (
     <>
     <div className="items-center justify-center m-10">
-      <ArticleForm article={artigo} onSubmit={handleSubmit} />
+      <ArticleForm article={artigo} onSubmit={handleSubmit} onClick={remove}  />
     </div>
   </>
   );
