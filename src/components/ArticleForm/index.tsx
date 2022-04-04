@@ -7,10 +7,12 @@ type ArticleFormProps = {
   article?: ArticleThumbnailProps;
   // adicionamos uma propriedade de onSubmit, a ser disparada quando o usuário enviar o form.
   onSubmit?: (article: ArticleThumbnailProps) => void;
+  onClick: () => Promise<void>;
 }
 export const ArticleForm: React.FC<ArticleFormProps> = ({
   article,
-  onSubmit
+  onSubmit,
+  onClick
 }) => {
   const [titulo, setTitulo] = useState("");
   const [resumo, setResumo] = useState("");
@@ -51,6 +53,8 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
       setImagem(event.target.result);
     };
   };
+
+ 
   return (
     <div className="grid min-h-screen mx-10 ">
       <div>
@@ -85,7 +89,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             name="image"
             label="Banner"
             onChange={transformaImagemEmBase64}
-            required
+            required={imagem===''}
           />
 
           <RitchTextEditor
@@ -96,6 +100,9 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
           />
 
           <Button type="submit">Salvar</Button>
+          <button className="w-full mt-6 tracking-widest
+        border-b-red-600 bg-red-500 py-3 text-white font-bold
+        hover:bg-red-400 active:translate-y-[0.125rem] active:border-b-red-400" onClick={onClick} type="submit">Excluir</button>
         </form>
       </div>
     </div>

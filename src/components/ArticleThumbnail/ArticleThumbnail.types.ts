@@ -1,3 +1,4 @@
+import React from "react";
 export type ArticleThumbnailProps = {
   imagem: string;
   titulo: string;
@@ -12,4 +13,5 @@ export type ArticleThumbnailProps = {
   editavel?: boolean;
   id:number;
   conteudo: string;
+  canEdit:any;
 }
