@@ -3,7 +3,7 @@ import { formataData } from "../../helpers/date";
 import { ArticleThumbnailProps } from "./ArticleThumbnail.types";
 import { Link } from 'react-router-dom'
 import apiClient from "../../service/api-client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 
 export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
   imagem,
@@ -13,9 +13,10 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
   tempoLeitura = "7 min",
   autor,
   id,
-  canEdit
+  remove
+  
 }) => {
-  const navigate = useNavigate();
+ 
   const [edit, setEdit] = useState(false)
   const [exclude,setExclude] = useState(false)
   useEffect(() => {
@@ -23,17 +24,15 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
     setEdit(autor.id === usuarioAtual);
     setExclude(autor.id === usuarioAtual)
   }, [autor]);
-  const remove = async () => {
-    
-    await apiClient.delete(`/artigos/${id}`);
-    navigate('/')
-    
-  }
+  
+
+ 
   return (
 
     <div className="w-10/12 flex flex-col mt-5">
 
-      <>
+    
+     <>
       <Link to={`/artigo/${id}`}>
         <header className="flex flex-row gap-3 items-center">
           <img
@@ -81,9 +80,9 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
             )}
             </Link>
           
-            {exclude && canEdit && 
+            { exclude &&
             <button
-                onClick={remove}
+                onClick={() => remove?.(id )}
                 className={`
               hover:bg-red-400 bg-red-300 text-white
               delay-100 duration-100
@@ -91,8 +90,8 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
               `}
               >
                 excluir
-              </button>}
-              
+              </button>
+              }
             
       </footer>
       <hr className="mt-5" />
