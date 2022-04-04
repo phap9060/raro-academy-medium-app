@@ -17,9 +17,9 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
   return (
     <>
       <header className="flex flex-row gap-3 items-center ml-20">
-        <img src={ autor.avatar } className="rounded-full" style={{ width: '50px', height: '50px' }} />
+        <img src={ autor?.avatar } className="rounded-full" style={{ width: '50px', height: '50px' }} />
         <div className="block">
-          <div>{ autor.nome }</div>
+          <div>{ autor?.nome }</div>
           <div className="text-sm text-gray-500">
             { formataData(dataPublicacao) } · {/* { tempoLeitura } */} 7min de leitura
           </div>

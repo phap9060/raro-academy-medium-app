@@ -1,31 +1,51 @@
-import faker from "@faker-js/faker";
 import { useState, useEffect } from "react";
 import { ArticleView } from "../../components/ArticleView";
+import apiClient from '../../service/api-client'
+import { useParams} from "react-router-dom";
+type ArticleProps = {
+  imagem?: string;
+  titulo?: string;
+  resumo?: string;
+  dataPublicacao?: Date;
+  tempoLeitura?: string;
+  autor: {
+    nome: string;
+    avatar: string;
+    id:number
+  };
+  editavel?: boolean;
+  id?:number;
+  conteudo: string;
+
+}
 export const ArtigoPage = () => {
-  const [article, setArticle] = useState<string>('');
-  const [autor] = useState({
-    nome: faker.name.firstName(),
-    avatar: faker.image.avatar(),
-  });
+  const [artigo, setArtigo] = useState<ArticleProps>();
+  const {id} = useParams()
+  
+
   const [dataPublicacao] = useState(new Date());
+
   useEffect(() => {
-    async function loadArticle() {
-      // este article.md precisa ser adicionado, temporariamente ao nosso código. Podemos copiar este conteúdo dentro da nossa pasta /public.
-      // sugiro que você retire este documento de `src/stories/assets/markdown/article.md`
-      const response = await fetch('/article.md');
-      const article = await response.text();
-      setArticle(article);
+    async function buscarArtigo() {
+      const response = await apiClient.get(`/artigos/${id}`)
+      setArtigo(response.data);
     }
-    loadArticle();
-  }, []);
+    buscarArtigo()
+    
+  },[])
+  
+ 
   return (
+    
     <div className="m-10">
       <ArticleView
-        article={article}
-        autor={autor}
+        article={artigo?.conteudo}
+        autor={artigo?.autor}
         dataPublicacao={dataPublicacao}
         tempoLeitura={ '10min' }
       />
     </div>
+   
+
   );
 };

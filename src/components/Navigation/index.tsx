@@ -1,25 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export const Navigation = () => {
-  const [auth,setAuth] = useState(false);
+  const [auth, setAuth] = useState(false);
   const navigate = useNavigate();
- 
-    useEffect(() => {
-      if (localStorage.getItem('id') !== null) {
-        setAuth(true);  ;
-      }
-    }, [auth])
-  
-  
-  
 
-  const logout = () => { 
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("id");
+  useEffect(() => {
+    setAuth(localStorage.getItem('id') !== null);
+  }, [])
+
+
+
+
+  const logout = () => {
+    localStorage.clear()
     setAuth(false);
     navigate('/');
   }
-  if(!auth){
+  if (!auth) {
     return (
       <>
         <Link to="/">Home</Link>

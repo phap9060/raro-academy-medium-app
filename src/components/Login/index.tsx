@@ -3,6 +3,7 @@ import { Input } from "../Input";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apiClient from '../../service/api-client'
 
 export const Login = () => {
   const [login, setLogin] = useState('');
@@ -17,8 +18,8 @@ export const Login = () => {
     setLoading(true)
     setErro('')
     try {
-      const url = 'http://3.221.159.196:3307/auth/login'
-      const response = await axios.post(url,
+      const url = '/auth/login'
+      const response = await apiClient.post(url,
         {
           login,
           senha
@@ -37,7 +38,7 @@ export const Login = () => {
       } else {
         setErro('Erro ao autenticar usuário. Tente novamente mais tarde.');
       }
-      setLoading(false)    
+      setLoading(false)
     }
 
   }
@@ -82,6 +83,13 @@ export const Login = () => {
               />
             </div>
           </div>
+          {
+            erro ? (
+              <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                {erro}
+              </span>
+            ) : <></>
+          }
           <div>
             <Button type="submit">{loading ? 'Carregando...' : 'Entrar'}</Button>
           </div>
